@@ -39,8 +39,10 @@ if st.button("✨ 開始產生"):
             # 3. AI 分析
             with st.spinner("AI 正在分析單字..."):
                 model = genai.GenerativeModel('gemini-1.5-flash')
-                prompt = f"請從以下字幕中挑選 10 個核心單字。回傳格式必須是 JSON 陣列，每個物件包含：'word' (單字), 'pos' (詞性), 'cn' (中文翻譯), 'exp' (中文解釋), 'eg' (英文例句)。字幕內容：{full_text[:3500]}"
+                # 確保下面這一行 prompt 前面的空格跟上面的 model 對齊，且中間不要換行
+                prompt = f"請從以下字幕挑選 10 個核心單字。格式為 JSON 陣列，包含 word, pos, cn, exp, eg。字幕：{full_text[:3000]}"
                 response = model.generate_content(prompt)
+
                 
                 # 清理回傳結果，只取 JSON 部分
                 clean_text = re.search(r'\[.*\]', response.text, re.DOTALL).group()
