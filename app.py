@@ -1,5 +1,5 @@
 import streamlit as st
-from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api import YouTubeTranscriptApi as yta
 import google.generativeai as genai
 import json
 import re
@@ -25,7 +25,7 @@ if st.button("✨ 開始產生"):
                 # 提取 YouTube Video ID
                 video_id = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", video_url).group(1)
                 # 抓取字幕 (預設英文)
-                transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
+                transcript_list = yta.get_transcript(video_id, languages=['en'])
                 full_text = " ".join([t['text'] for t in transcript_list])
             
             with st.spinner("AI 正在分析單字..."):
